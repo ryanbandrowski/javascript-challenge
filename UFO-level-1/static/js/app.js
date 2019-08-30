@@ -1,12 +1,46 @@
 // from data.js
 var tableData = data;
 
-//      datetime: "1/1/2010",
-//      city: "benton",
-//      state: "ar",
-//      country: "us",
-//      shape: "circle",
-//      durationMinutes: "5 mins.",
-//      comments: "4 bright green circles high 
+// populate the table with the UFO data
+var tbody = d3.select("tbody");
 
-// YOUR CODE HERE!
+tableData.forEach(function(ufo) {
+    var row = tbody.append("tr");
+
+    Object.entries(ufo).forEach(function([key, value]) {
+        var cell = row.append("td");
+        cell.text(value);
+    });
+});
+
+// 
+var button = d3.select("#filter-btn");
+
+button.on("click", function(ufo) {
+    var rows = d3.select("tbody").selectAll("tr");
+    rows.remove();
+    var inputElement = d3.select(".form-control");
+    var inputDate = inputElement.property("value");
+    var filteredData = tableData.filter(ufo => ufo.datetime === inputDate);
+    if (inputDate == "") {
+        filteredData = tableData;
+        filteredData.forEach(function(ufo) {
+            var row = tbody.append("tr");
+            Object.entries(ufo).forEach(function([key, value]) {
+                var cell = row.append("td");
+                cell.text(value);
+            });
+        });
+    }
+    else { 
+        filteredData.forEach(function(ufo) {
+            var row = tbody.append("tr");
+            Object.entries(ufo).forEach(function([key, value]) {
+                var cell = row.append("td");
+                cell.text(value);
+            });
+        });
+    };
+});
+
+// 
