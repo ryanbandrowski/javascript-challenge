@@ -1,7 +1,6 @@
 // from data.js
 var tableData = data;
 
-// populate the table with the UFO data
 var tbody = d3.select("tbody");
 
 tableData.forEach(function(ufo) {
@@ -13,7 +12,6 @@ tableData.forEach(function(ufo) {
     });
 });
 
-// 
 var button = d3.select("#filter-btn");
 
 button.on("click", function(ufo) {
@@ -42,5 +40,3 @@ button.on("click", function(ufo) {
         });
     };
 });
-
-// 
