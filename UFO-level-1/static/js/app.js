@@ -12,31 +12,33 @@ tableData.forEach(function(ufo) {
     });
 });
 
-var button = d3.select("#filter-btn");
+// function for filtering table data
+function filterTable(tableData) {
 
-button.on("click", function(ufo) {
     var rows = d3.select("tbody").selectAll("tr");
     rows.remove();
-    var inputElement = d3.select(".form-control");
-    var inputDate = inputElement.property("value");
-    var filteredData = tableData.filter(ufo => ufo.datetime === inputDate);
-    if (inputDate == "") {
-        filteredData = tableData;
-        filteredData.forEach(function(ufo) {
-            var row = tbody.append("tr");
-            Object.entries(ufo).forEach(function([key, value]) {
-                var cell = row.append("td");
-                cell.text(value);
-            });
+
+    var dateInput = d3.select(".form-control");
+    var inputDate = dateInput.property("value");
+
+    var filteredData = tableData;
+    if (inputDate != "") {filteredData = filteredData.filter(ufo => ufo.datetime === inputDate)};
+    
+    filteredData.forEach(function(ufo) {
+        var row = tbody.append("tr");
+        Object.entries(ufo).forEach(function([key, value]) {
+            var cell = row.append("td");
+            cell.text(value);
         });
-    }
-    else { 
-        filteredData.forEach(function(ufo) {
-            var row = tbody.append("tr");
-            Object.entries(ufo).forEach(function([key, value]) {
-                var cell = row.append("td");
-                cell.text(value);
-            });
-        });
-    };
-});
+    });
+};
+
+// function for handling button click
+function handleClick() {
+    d3.event.preventDefault();
+    var tableData = data;
+    filterTable(tableData);
+};
+
+// event listener for filter button
+d3.select("#filter-btn").on("click", handleClick);

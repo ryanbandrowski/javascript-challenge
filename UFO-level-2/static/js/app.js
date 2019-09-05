@@ -28,9 +28,8 @@ shapes.forEach(function(shape) {
 });
 
 // filter table based on several inputs, accounting for only some of the inputs being used
-var button = d3.select("#filter-btn");
+function filterTable(tableData) {
 
-button.on("click", function(ufo) {
     var rows = d3.select("tbody").selectAll("tr");
     rows.remove();
 
@@ -46,11 +45,11 @@ button.on("click", function(ufo) {
     var inputShape = shapeInput.property("value");
 
     var filteredData = tableData;
-    if (inputDate != "") {filteredData = filteredData.filter(ufo => ufo.datetime == inputDate);};
-    if (inputCity != "") {filteredData = filteredData.filter(ufo => ufo.city == inputCity);};
-    if (inputState != "") {filteredData = filteredData.filter(ufo => ufo.state == inputState);};
-    if (inputCountry != "") {filteredData = filteredData.filter(ufo => ufo.country == inputCountry);};
-    if (inputShape != "") {filteredData = filteredData.filter(ufo => ufo.shape == inputShape);};
+    if (inputDate != "") {filteredData = filteredData.filter(ufo => ufo.datetime == inputDate)};
+    if (inputCity != "") {filteredData = filteredData.filter(ufo => ufo.city == inputCity)};
+    if (inputState != "") {filteredData = filteredData.filter(ufo => ufo.state == inputState)};
+    if (inputCountry != "") {filteredData = filteredData.filter(ufo => ufo.country == inputCountry)};
+    if (inputShape != "") {filteredData = filteredData.filter(ufo => ufo.shape == inputShape)};
 
     filteredData.forEach(function(ufo) {
         var row = tbody.append("tr");
@@ -59,4 +58,14 @@ button.on("click", function(ufo) {
             cell.text(value);
         });
     });
-});
+};
+
+// function for handling button click
+function handleClick() {
+    d3.event.preventDefault();
+    var tableData = data;
+    filterTable(tableData);
+};
+
+// event listener for filter button
+d3.select("#filter-btn").on("click", handleClick);
